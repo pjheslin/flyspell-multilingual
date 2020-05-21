@@ -4,7 +4,7 @@
 ;; Copyright (C) 2004, 2005 P J Heslin
 ;;
 ;; Author: Peter Heslin <p.j.heslin@dur.ac.uk>
-;; URL: http://www.dur.ac.uk/p.j.heslin/Software/Emacs
+;; URL: https://github.com/pjheslin/flyspell-multilingual
 ;; Version: 2.1
 ;;
 ;; This program is free software; you can redistribute it and/or modify
@@ -77,7 +77,7 @@
 ;; for the details:
 ;;
 ;;    (setq ispell-local-dictionary-alist
-;;          `(("irish"			
+;;          `(("irish"
 ;;        "[A-Z\301\311\315\323\332a-z\341\351\355\363\372]"
 ;;        "[^A-Z\301\311\315\323\332a-z\341\351\355\363\372]"
 ;;        "[-']" nil ("-B" "--lang=ga") "~latin1" iso-8859-1)))
@@ -101,11 +101,11 @@
 ;;            ("iri" "irish")))
 ;;
 ;; Now reload the present package and test it on a file like this:
-;;     
+;;
 ;;    <main xml:lang="en">
 ;;      <foreign xml:lang="it">ciao</foreign> world!
 ;;      <quote xml:lang="ga">
-;;        tá riabh go maith agat
+;;        tï¿½ riabh go maith agat
 ;;      </quote>
 ;;    Good-bye!
 ;;    </main>
@@ -367,7 +367,7 @@
     (when (> level 0)
       ;; no end tag
       (goto-char (point-max)))))
-      
+
 (defun flyspell-xml-lang-flag-region (beg end lang)
   (let ((trans (assoc lang flyspell-xml-lang-to-ispell-alist))
         (buffer-modified-before (buffer-modified-p))
@@ -386,7 +386,7 @@
            (not (member lang ispell-multi-valid-dictionary-list)))
       ;; A parsed region with an uninstalled dict
       (message "Flyspell-babel warning: no dictionary installed for %s" lang)
-      (setq lang "void"))) 
+      (setq lang "void")))
     (when (> end (point-max)) (setq end (point-max)))
     (put-text-property (1+ beg) end 'ispell-multi-lang lang)
     (set-buffer-modified-p buffer-modified-before)))
@@ -404,7 +404,7 @@
   (setq ispell-multi-idler-callback 'flyspell-xml-lang-parse-buffer)
   (ispell-multi-idler-setup flyspell-xml-lang-delay)
   (ispell-multi-hack-flyspell-modeline))
-  
+
 (defun flyspell-xml-lang-stop ()
 ;  (ispell-multi-idler-cancel)
   (setq flyspell-generic-check-word-p nil)
@@ -412,7 +412,7 @@
   (flyspell-mode -1))
 
 (define-minor-mode flyspell-xml-lang-mode
-  "Mode to make flyspell language selection obey xml:lang attributes" nil 
+  "Mode to make flyspell language selection obey xml:lang attributes" nil
       :group 'flyspell-xml-lang
       (if flyspell-xml-lang-mode
           (flyspell-xml-lang-start)
@@ -422,4 +422,3 @@
   (flyspell-xml-lang-mode 1))
 
 (provide 'flyspell-xml-lang)
-

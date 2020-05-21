@@ -4,7 +4,7 @@
 ;; Copyright (C) 2004 P J Heslin
 ;;
 ;; Author: Peter Heslin <p.j.heslin@dur.ac.uk>
-;; URL: http://www.dur.ac.uk/p.j.heslin/Software/Emacs
+;; URL: https://github.com/pjheslin/flyspell-multilingual
 ;; Version: 3.2
 ;;
 ;; This program is free software; you can redistribute it and/or modify
@@ -113,26 +113,26 @@
 ;; American and British spelling.
 ;;
 ;;    (setq flyspell-babel-verbose t)
-;;     
+;;
 ;;    (setq flyspell-babel-to-ispell-alist
 ;;          '(("latin" nil)
 ;;            ("ibycus" nil)
 ;;            ("french" "francais")))
-;;     
+;;
 ;;    (setq flyspell-babel-command-alist
 ;;          '(("lat" "latin")
 ;;            ("gk" "ibycus")
 ;;            ("fr" "french")
 ;;            ("ger" "german")
 ;;            ("itl" "italian")))
-;;     
+;;
 ;;    (setq flyspell-babel-environment-alist
 ;;          '(("latin" "latin")
 ;;            ("greek" "ibycus")
 ;;            ("french" "french")
 ;;            ("german" "german")
 ;;            ("italian" "italian")))
-;;     
+;;
 ;;    (setq flyspell-babel-declaration-alist
 ;;          '(("yank" "american")
 ;;            ("brit" "british")))
@@ -140,19 +140,19 @@
 ;; Here is the LaTeX code that defines these short-cuts:
 ;;
 ;; \usepackage[ibycus,latin,french,german,italian,british,american]{babel}
-;;  
+;;
 ;; \newcommand{\lat}[1]{\foreignlanguage{latin}{\emph{#1}}}
 ;; \newenvironment{latin}{\begin{otherlanguage}{latin}}{\end{otherlanguage}}
-;;  
+;;
 ;; \newcommand{\fr}[1]{\foreignlanguage{french}{\emph{#1}}}
 ;; \newenvironment{french}{\begin{otherlanguage}{french}}{\end{otherlanguage}}
-;;  
+;;
 ;; \newcommand{\ger}[1]{\foreignlanguage{german}{\emph{#1}}}
 ;; \newenvironment{german}{\begin{otherlanguage}{german}}{\end{otherlanguage}}
-;;  
+;;
 ;; \newcommand{\itl}[1]{\foreignlanguage{italian}{\emph{#1}}}
 ;; \newenvironment{italian}{\begin{otherlanguage}{italian}}{\end{otherlanguage}}
-;;  
+;;
 ;; \newcommand{\yank}{\selectlanguage{american}}
 ;; \newcommand{\brit}{\selectlanguage{british}}
 
@@ -204,7 +204,7 @@
 (defcustom flyspell-babel-declaration-alist ()
   "Maps LaTeX language-switching declarations (other than the
   built-in babel \\selectlanguage declaration) to babel
-  languages" 
+  languages"
   :type 'alist
   :group 'flyspell-babel)
 
@@ -265,7 +265,7 @@
 		  flyspell-babel-command-alist-all "\\|"))
 
 (setq flyspell-babel-decl-env-com-regexp
-       (mapconcat 'identity (list flyspell-babel-decl-regexp 
+       (mapconcat 'identity (list flyspell-babel-decl-regexp
 				  flyspell-babel-env-regexp
 				  flyspell-babel-com-regexp) "\\|"))
 
@@ -274,7 +274,7 @@
   (save-excursion
     (goto-char (point-max))
     (flyspell-babel-parse)))
-    
+
 (defun flyspell-babel-parse ()
   "Parse backward from point until containing element or bob is
 found; then run forward and flag regions found."
@@ -323,7 +323,7 @@ found; then run forward and flag regions found."
                 (re-search-backward flyspell-babel-decl-env-com-regexp end t))
       (setq found (not (flyspell-babel-in-comment-p))))
     found))
-                
+
 (defun flyspell-babel-find-next-macro (end)
   (let ((found))
     (while (and (not found)
@@ -409,7 +409,7 @@ found; then run forward and flag regions found."
   trap errors for unbalanced braces."
   (interactive "p")
   (let ((parse-sexp-ignore-comments t))
-    (condition-case nil 
+    (condition-case nil
 	(forward-sexp arg)
       (error (goto-char (point-max))))))
 
@@ -469,7 +469,7 @@ found; then run forward and flag regions found."
   (flyspell-mode -1))
 
 (define-minor-mode flyspell-babel-mode
-  "Mode to make flyspell language selection obey LaTeX Babel commands" nil 
+  "Mode to make flyspell language selection obey LaTeX Babel commands" nil
       :group 'flyspell-babel
       (if flyspell-babel-mode
           (flyspell-babel-start)
@@ -479,4 +479,3 @@ found; then run forward and flag regions found."
   (flyspell-babel-mode 1))
 
 (provide 'flyspell-babel)
-

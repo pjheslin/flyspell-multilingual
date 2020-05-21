@@ -3,7 +3,7 @@
 ;; Copyright (C) 2005 P J Heslin
 ;;
 ;; Author: Peter Heslin <p.j.heslin@dur.ac.uk>
-;; URL: http://www.dur.ac.uk/p.j.heslin/Software/Emacs
+;; URL: https://github.com/pjheslin/flyspell-multilingual
 ;; Version: 1.2
 ;;
 ;; This program is free software; you can redistribute it and/or modify
@@ -111,7 +111,7 @@
 ;; correct spelling (which is quite handy when using
 ;; flyspell-auto-correct-previous-word).  If you prefer to use aspell,
 ;; you can put the following into your .emacs:
-;;     
+;;
 ;;    (setq ispell-program-name "aspell")
 ;;    (setq ispell-really-aspell t)
 ;;    (setq ispell-extra-args '("--sug-mode=fast"))
@@ -285,14 +285,14 @@
           ;; the same as ispell-local-dictionary, ispell.el will
           ;; refrain from killing the process
           (set ispell-multi-current-dictionary-var ispell-local-dictionary))
-      
+
       ;; This is to fool ispell into not killing the old process when
       ;; it starts the new one.  But we don't want a new process if
       ;; the current one is correct, or if the default dict is void.
       (unless (or (equal (symbol-value ispell-multi-current-dictionary-var) ispell-local-dictionary)
                   (equal ispell-local-dictionary "void"))
         (setq ispell-process nil))
-      
+
       ;; Possibly start a new process
       (unless (equal ispell-local-dictionary "void")  ; ensure against error
         ad-do-it))))
@@ -306,7 +306,7 @@
       (when (and old-list (not new-list)
                  (eq (process-status proc) 'run))
         (setq ispell-process proc)
-        (ispell-kill-ispell))))      
+        (ispell-kill-ispell))))
   (ispell-multi-processes-alist-cleanup))
 
 (add-hook 'kill-buffer-hook 'ispell-multi-kill-processes-hook)
@@ -319,7 +319,7 @@
         (setq newlist (cons (car ispell-multi-lang-process) newlist)))
       (setq ispell-multi-lang-process (cdr ispell-multi-lang-process)))
     (setq ispell-multi-lang-process (nreverse newlist))))
-  
+
 (defvar ispell-multi-local-regexp
   (mapconcat 'regexp-quote (list ispell-dictionary-keyword
                                  ispell-pdict-keyword
@@ -424,7 +424,7 @@
   "Remove the flyspell modeline entry"
   (setq minor-mode-alist
         (delq (assq 'flyspell-mode minor-mode-alist) minor-mode-alist)))
-  
+
 (defun ispell-multi-hack-flyspell-modeline ()
   "Add a modeline entry for flyspell that indicates the current
   language in parentheses."
@@ -442,4 +442,3 @@
     (message "ispell-multi -- %s" mess)))
 
 (provide 'ispell-multi)
-
